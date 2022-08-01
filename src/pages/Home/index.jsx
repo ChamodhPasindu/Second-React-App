@@ -1,4 +1,5 @@
-import { Component } from "react";
+import {Component, Fragment} from "react";
+import NavBar from "../NavBar";
 
 class HomePage extends Component {
     constructor(props) {
@@ -7,9 +8,9 @@ class HomePage extends Component {
 
     render() {
         return(
-            <div>
-                <h1>Hello from the Home Page</h1>
-            </div>
+        <Fragment>
+            <NavBar/>
+        </Fragment>
         )
     }
 }
