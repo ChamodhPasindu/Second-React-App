@@ -11,8 +11,8 @@ class Login extends Component {
   render() {
     return (
       <Fragment>
-        <div className="container">
-          <div className="sub-container">
+        <div className="login-container">
+          <div className="login-sub-container">
             <Typography
               style={{
                 textAlign: "center",
@@ -25,7 +25,7 @@ class Login extends Component {
             >
               Login
             </Typography>
-            <div className="text-field-area">
+            <div className="login-text-field-area">
               <TextField
                 style={{ marginBottom: "30px", marginTop: "20px" }}
                 id="outlined-password-input"
