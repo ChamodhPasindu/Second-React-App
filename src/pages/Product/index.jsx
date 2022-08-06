@@ -4,10 +4,19 @@ import "./style.css";
 import { TextField, Button } from "@mui/material";
 import NavBar from '../NavBar'
 
-import IconButton from '@mui/material/IconButton';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
-
 class Product extends Component {
+  constructor(props){
+    super(props)
+    this.state={
+      formData:{
+        title:'',
+        price:'',
+        company:'',
+        description:'',
+        
+      }
+    }
+  }
   render() {
     return (
       <Fragment>
