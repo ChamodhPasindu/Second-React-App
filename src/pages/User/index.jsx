@@ -3,6 +3,7 @@ import { Component, Fragment } from "react";
 import "./style.css";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 
 class User extends Component {
   render() {
@@ -11,7 +12,21 @@ class User extends Component {
         <div className="user-container">
           <div className="user-sub-detail-container">
             <div className="user-form-title">
-              <h1>User Registration From</h1>
+            <Link to={"/"} style={{ textDecoration: "none",marginRight:'28%',marginTop:'10px' }}>
+                <Button
+                  style={{
+                    textTransform: "none",
+                    color: "white",
+                    background: "black",
+                    borderRadius: "15px",
+                    marginLeft: "0",
+                    fontSize: "medium",
+                  }}
+                >
+                  back
+                </Button>
+              </Link>
+              <h1 style={{marginRight:'30%' }}>User Registration From</h1> 
             </div>
             <div className="user-from-detail">
               <div className="user-form-detail-col1">
@@ -109,7 +124,7 @@ class User extends Component {
             <div className="user-form-title">
               <h1>Current Users</h1>
             </div>
-            <div ></div>
+            <div></div>
           </div>
         </div>
       </Fragment>

@@ -12,6 +12,7 @@ class Cart extends Component {
   render() {
     return (
       <Fragment>
+        <NavBar/>
         <div className="manage-container">
           <div className="manage-sub-container">
             <div className="manage-form-title">

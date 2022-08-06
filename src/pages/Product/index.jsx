@@ -2,6 +2,7 @@ import React from "react";
 import { Fragment, Component } from "react";
 import "./style.css";
 import { TextField, Button } from "@mui/material";
+import NavBar from '../NavBar'
 
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
@@ -10,6 +11,7 @@ class Product extends Component {
   render() {
     return (
       <Fragment>
+        <NavBar/>
         <div className="manage-container">
           <div className="manage-sub-container">
             <div className="manage-form-title">

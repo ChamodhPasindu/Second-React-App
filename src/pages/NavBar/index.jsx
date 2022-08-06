@@ -1,5 +1,6 @@
 import React, {Component,Fragment} from "react";
-import {AppBar, Button, Grid, Link, Tabs, Toolbar, Typography,Tab} from "@mui/material";
+import {AppBar, Button, Grid, Tabs, Toolbar, Typography,Tab} from "@mui/material";
+import {Link} from "react-router-dom";
 
 
 class NavBar extends Component{
@@ -12,7 +13,7 @@ class NavBar extends Component{
             <Fragment>
                 <AppBar sx={{backgroundColor: 'blue', position: "static", boxShadow: 'none'}}>
                     <Toolbar>
-                        <Link to="/" style={{textDecoration: 'none'}}>
+                        <Link to="/homepage" style={{textDecoration: 'none'}}>
                             <Button style={{
                                 textTransform: 'none',
                                 color: 'white',
@@ -22,7 +23,7 @@ class NavBar extends Component{
                                 fontSize: 'medium'
                             }}>Dashboard</Button> </Link>
                         <Tabs sx={{margin: 'auto', mr: 5, display: 'flex', alignItems: "center"}} >
-                            <Link to={"/customerDashboard"} style={{textDecoration: 'none'}}>
+                            <Link to={"/product"} style={{textDecoration: 'none'}}>
                                 <Button style={{
                                     textTransform: 'none',
                                     color: 'white',
@@ -32,7 +33,7 @@ class NavBar extends Component{
                                     fontSize: 'medium'
                                 }}>Product</Button>
                             </Link>
-                            <Link to={"/reservation"} style={{textDecoration: 'none'}}>
+                            <Link to={"/cart"} style={{textDecoration: 'none'}}>
                                 <Button style={{
                                     textTransform: 'none',
                                     color: 'white',
@@ -42,6 +43,7 @@ class NavBar extends Component{
                                     fontSize: 'medium'
                                 }}>Cart</Button>
                             </Link>
+                           
                         </Tabs>
                         <Tabs textColor="white" sx={{margin: 'auto', mr: 5, display: 'flex', alignItems: "center"}}>
 
@@ -49,7 +51,6 @@ class NavBar extends Component{
                                 variant="h6"
                                 noWrap
                                 component="a"
-                                href="/"
                                 sx={{
                                     mr: 1,
                                     display: {xs: 'none', md: 'flex'},
@@ -62,6 +63,16 @@ class NavBar extends Component{
                                 }}
                             >User
                             </Typography>
+                            <Link to={"/"} style={{textDecoration: 'none'}}>
+                                <Button style={{
+                                    textTransform: 'none',
+                                    color: 'white',
+                                    background: 'red',
+                                    borderRadius: '15px',
+                                    marginLeft: '5px',
+                                    fontSize: 'medium'
+                                }}>Logout</Button>
+                            </Link>
                         </Tabs>
                     </Toolbar>
                 </AppBar>

@@ -2,8 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100vw;
-    height: 100vh;
+    height: 80vh;
 }
 .manage-sub-container{
     display: flex;
@@ -11,7 +10,7 @@
     justify-content: space-between;
     flex-direction: column;
     width: 80%;
-    height: 80%;
+    height: 60%;
     box-shadow: 0px 0px 5px 2px rgb(170, 170, 170);
     border-radius: 10px;
 }
