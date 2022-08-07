@@ -11,7 +11,8 @@ class Product extends Component {
       formData:{
         title:'',
         price:'',
-        company:'',
+        category:'',
+        image:'',
         description:'',
         
       }
@@ -37,7 +38,7 @@ class Product extends Component {
                 <TextField
                   sx={{ marginTop: "30px" }}
                   id="outlined-basic"
-                  label="First Company"
+                  label="Category"
                   variant="outlined"
                   fullWidth
                 />

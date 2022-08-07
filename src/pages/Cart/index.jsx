@@ -7,8 +7,78 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import NavBar from "../NavBar";
+import ProductService from "../../services/ProductService";
+import CartService from "../../services/CartService";
+import CustomerService from "../../services/CustomerService";
+
+const date = new Date();
+const futureDate = date.getDate() + 3;
+date.setDate(futureDate);
+const defaultValue = date.toLocaleDateString('en-CA');
 
 class Cart extends Component {
+  constructor(props) {
+    super(props);
+    this.state={
+      cartForm:{
+        user_name:'',
+        product_title:'',
+        date:defaultValue,
+        qty:'',
+      },
+      products:[],
+      users:[],
+    }
+  }
+
+  saveCart=async ()=>{
+    let cartForm=this.state.cartForm;
+    console.log(cartForm)
+    let response=await CartService.postCart(cartForm);
+    if (response.status===200){
+      alert("Cart Saved Successfully")
+    }else {
+      alert("Cart Saving Failed")
+    }
+  }
+
+  setProductTitle=async ()=>{
+    let response=await ProductService.getAllProduct();
+    if (response.status===200){
+      this.setState({
+        products:response.data
+      })
+    }
+    console.log(this.state.products)
+
+  }
+  setUserName=async ()=>{
+    let response=await CustomerService.getAllCustomer();
+    if (response.status===200){
+      this.setState({
+        users:response.data})
+    }
+    console.log(this.state.users)
+  }
+
+  componentDidMount() {
+    this.setProductTitle()
+    this.setUserName()
+  }
+
+  clearFields=()=>{
+    console.log("awa")
+    this.setState({
+      cartForm:{
+        user_name:'',
+        product_title:'',
+        date:defaultValue,
+        qty:'',
+      }
+    })
+  }
+
+
   render() {
     return (
       <Fragment>
@@ -27,12 +97,16 @@ class Cart extends Component {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value="User Name"
                     label="User Name"
+                    onChange={(e)=>{
+                      let cartForm = this.state.cartForm;
+                      cartForm.user_name=this.state.users[e.target.value].name.firstname+" "+this.state.users[e.target.value].name.lastname;
+                      this.setState({cartForm})
+                    }}
                   >
-                    <MenuItem value={"10"}>001</MenuItem>
-                    <MenuItem value={"20"}>002</MenuItem>
-                    <MenuItem value={"30"}>003</MenuItem>
+                      {this.state.users.map((user=>(
+                          <MenuItem value={user.id}>{user.name.firstname +" "+user.name.lastname}</MenuItem>
+                      )))}
                   </Select>
                 </FormControl>
                 <FormControl fullWidth sx={{ marginTop: "30px" }}>
@@ -42,12 +116,16 @@ class Cart extends Component {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value="Product Title"
                     label="Product Title"
+                    onChange={(e)=>{
+                      let cartForm = this.state.cartForm;
+                      cartForm.product_title=this.state.products[e.target.value].title;
+                      this.setState({cartForm})
+                    }}
                   >
-                    <MenuItem value={"10"}>001</MenuItem>
-                    <MenuItem value={"20"}>002</MenuItem>
-                    <MenuItem value={"30"}>003</MenuItem>
+                    {this.state.products.map((product=>(
+                        <MenuItem value={product.id}>{product.title}</MenuItem>
+                    )))}
                   </Select>
                 </FormControl>
               </div>
@@ -56,18 +134,32 @@ class Cart extends Component {
                   id="date"
                   label="Date"
                   type="date"
-                  defaultValue="2017-05-24"
                   sx={{ width: "100%" }}
+                  value={this.state.cartForm.date}
+                  defaultValue={this.state.cartForm.date}
                   InputLabelProps={{
                     shrink: true,
+                  }}
+                  onChange={(e)=>{
+                    let cartForm = this.state.cartForm;
+                    cartForm.date=e.target.value
+                    this.setState({cartForm})
                   }}
                 />
                 <TextField
                   sx={{ marginTop: "30px" }}
                   id="outlined-basic"
                   label="Qty"
+                  type="number"
                   variant="outlined"
                   fullWidth
+                  value={this.state.cartForm.qty}
+                  onChange={(e)=>{
+                    let cartForm = this.state.cartForm;
+                    cartForm.qty=e.target.value
+                    this.setState({cartForm})
+                    console.log(this.state.cartForm)
+                  }}
                 />
               </div>
             </div>
@@ -77,10 +169,16 @@ class Cart extends Component {
                 color="error"
                 size="large"
                 sx={{ marginRight: "10px" }}
+                onClick={()=>{
+                  this.clearFields()
+                }}
               >
                 Clear
               </Button>
-              <Button variant="outlined" size="large">
+              <Button variant="outlined" size="large"
+              onClick={()=>{
+                this.saveCart()
+              }}>
                 Save
               </Button>
             </div>
