@@ -3,8 +3,8 @@ import {Component} from "react";
 import "./style.css";
 import {Typography, TextField, Button} from "@mui/material";
 import {Link, Route, Routes} from "react-router-dom";
-import GetService from "../../services/GetService";
 import HomePage from "../Home";
+import CustomerService from "../../services/CustomerService";
 
 class Login extends Component {
     constructor(props) {
@@ -21,8 +21,7 @@ class Login extends Component {
     loginHandle = async () => {
         let loginData = this.state.loginData;
         console.log(loginData)
-        let pathUrl = "auth/login";
-        let response = await GetService.createPost(loginData, pathUrl);
+        let response = await CustomerService.loginCustomer(loginData);
         if (response.status === 200) {
             console.log(response.data)
             return true
@@ -95,7 +94,7 @@ class Login extends Component {
                                 gutterBottom
                                 component="div"
                             >
-                                Do you have already an account
+                                Do you have not an account
                                 <Link to={"user"} style={{textDecoration: 'none', width: '100%'}}>
                                     <Button size="large">Click Here</Button>
                                 </Link>

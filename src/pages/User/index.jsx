@@ -4,8 +4,11 @@ import "./style.css";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {Link} from "react-router-dom";
-import {Paper, Table, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import PostService from "../../services/PostService"
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip} from "@mui/material";
+import CustomerService from "../../services/CustomerService";
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
 
 class User extends Component {
     constructor(props) {
@@ -35,23 +38,69 @@ class User extends Component {
             loaded:false,
         }
     }
+    clearFields= () => {
+        this.setState({
+            userForm: {
+                email: '',
+                username: '',
+                password: '',
+                name: {
+                    firstname: '',
+                    lastname: '',
+                },
+                address: {
+                    city: '',
+                    street: '',
+                    number: '',
+                    zipcode: '',
+                    geolocation: {
+                        lat: '',
+                        long: ''
+                    }
+                },
+                phone: ''
+            }
+        });
+    };
 
     userSave=async ()=>{
         let userForm=this.state.userForm;
-        console.log(userForm)
-        let pathUrl = "users";
-        let response = await PostService.createPost(userForm, pathUrl);
+        let response = await CustomerService.postCustomer(userForm);
         if (response.status === 200) {
             this.setState({
-                data:true,
-                loaded:response.data
+                loaded:true,
             })
+            this.loadAllUsers()
+            this.clearFields();
             alert("User Saved Successfully")
         } else {
             alert("User Save Failed")
         }
-
     }
+
+
+    loadAllUsers=async ()=> {
+        let response=await CustomerService.getAllCustomer();
+        if (response.status===200){
+            this.setState({
+                data: response.data
+            })
+        }
+    }
+
+    updateCustomer=async (data)=>{
+        console.log(data)
+    }
+
+    deleteCustomer=async (id)=>{
+        console.log(id)
+    }
+
+
+    componentDidMount() {
+        this.loadAllUsers();
+    }
+
 
     render() {
         return (
@@ -82,6 +131,7 @@ class User extends Component {
                                     label="First Name"
                                     variant="outlined"
                                     fullWidth
+                                    value={this.state.userForm.name.firstname}
                                     onChange={(e) => {
                                         let userForm = this.state.userForm;
                                         userForm.name.firstname = e.target.value
@@ -93,6 +143,7 @@ class User extends Component {
                                     label="Email"
                                     variant="outlined"
                                     fullWidth
+                                    value={this.state.userForm.email}
                                     onChange={(e) => {
                                         let userForm = this.state.userForm;
                                         userForm.email = e.target.value
@@ -105,6 +156,7 @@ class User extends Component {
                                     type="password"
                                     variant="outlined"
                                     fullWidth
+                                    value={this.state.userForm.password}
                                     onChange={(e) => {
                                         let userForm = this.state.userForm;
                                         userForm.password = e.target.value
@@ -116,6 +168,7 @@ class User extends Component {
                                     label="Street"
                                     variant="outlined"
                                     fullWidth
+                                    value={this.state.userForm.address.street}
                                     onChange={(e) => {
                                         let userForm = this.state.userForm;
                                         userForm.address.street = e.target.value
@@ -127,6 +180,7 @@ class User extends Component {
                                     label="Zip Code"
                                     variant="outlined"
                                     fullWidth
+                                    value={this.state.userForm.address.zipcode}
                                     onChange={(e) => {
                                         let userForm = this.state.userForm;
                                         userForm.address.zipcode = e.target.value
@@ -138,6 +192,7 @@ class User extends Component {
                                     label="Long Value"
                                     variant="outlined"
                                     fullWidth
+                                    value={this.state.userForm.address.geolocation.long}
                                     onChange={(e) => {
                                         let userForm = this.state.userForm;
                                         userForm.address.geolocation.long = e.target.value
@@ -151,6 +206,7 @@ class User extends Component {
                                     label="Last Name"
                                     variant="outlined"
                                     fullWidth
+                                    value={this.state.userForm.name.lastname}
                                     onChange={(e) => {
                                         let userForm = this.state.userForm;
                                         userForm.name.lastname = e.target.value
@@ -162,6 +218,7 @@ class User extends Component {
                                     label="User Name"
                                     variant="outlined"
                                     fullWidth
+                                    value={this.state.userForm.username}
                                     onChange={(e) => {
                                         let userForm = this.state.userForm;
                                         userForm.username = e.target.value
@@ -173,6 +230,7 @@ class User extends Component {
                                     label="City"
                                     variant="outlined"
                                     fullWidth
+                                    value={this.state.userForm.address.city}
                                     onChange={(e) => {
                                         let userForm = this.state.userForm;
                                         userForm.address.city = e.target.value
@@ -184,6 +242,7 @@ class User extends Component {
                                     label="Street No"
                                     variant="outlined"
                                     fullWidth
+                                    value={this.state.userForm.address.number}
                                     onChange={(e) => {
                                         let userForm = this.state.userForm;
                                         userForm.address.number = e.target.value
@@ -195,6 +254,7 @@ class User extends Component {
                                     label="Lat Value"
                                     variant="outlined"
                                     fullWidth
+                                    value={this.state.userForm.address.geolocation.lat}
                                     onChange={(e) => {
                                         let userForm = this.state.userForm;
                                         userForm.address.geolocation.lat = e.target.value
@@ -206,6 +266,7 @@ class User extends Component {
                                     label="Mobile No"
                                     variant="outlined"
                                     fullWidth
+                                    value={this.state.userForm.phone}
                                     onChange={(e) => {
                                         let userForm = this.state.userForm;
                                         userForm.phone = e.target.value
@@ -220,6 +281,9 @@ class User extends Component {
                                 color="error"
                                 size="large"
                                 sx={{marginRight: "10px"}}
+                                onClick={()=>{
+                                    this.clearFields()
+                                }}
                             >
                                 Clear
                             </Button>
@@ -235,9 +299,9 @@ class User extends Component {
                         <div className="user-form-title">
                             <h1>Current Users</h1>
                         </div>
-                        <div className={"user-from-detail"}>
+                        <div style={{overflow: 'auto'}} className={"user-from-detail"}>
                             <TableContainer style={{width: '100%'}} component={Paper}>
-                                <Table aria-label="simple table">
+                                <Table aria-label="user table">
                                     <TableHead style={{background: '#141212'}}>
                                         <TableRow>
                                             <TableCell style={{color: 'white', fontSize: '15px'}} align="center">First
@@ -252,7 +316,42 @@ class User extends Component {
                                                        align="center">Action</TableCell>
                                         </TableRow>
                                     </TableHead>
-
+                                    <TableBody>
+                                        {
+                                           this.state.data.map((row)=>(
+                                               <TableRow>
+                                                   <TableCell style={{ fontSize: '15px'}} align="center">{row.name.firstname}</TableCell>
+                                                   <TableCell style={{ fontSize: '15px'}}
+                                                              align="center">{row.email}</TableCell>
+                                                   <TableCell style={{  fontSize: '15px'}}
+                                                              align="center">{row.address.city}</TableCell>
+                                                   <TableCell style={{ fontSize: '15px'}}
+                                                              align="center">{row.phone}</TableCell>
+                                                   <TableCell style={{  fontSize: '15px'}}
+                                                              align="center"> <Tooltip title="Edit">
+                                                       <IconButton
+                                                           onClick={() => {
+                                                               console.log("edit icon clicked!")
+                                                               this.updateCustomer(row);
+                                                           }}
+                                                       >
+                                                           <EditIcon color="primary" />
+                                                       </IconButton>
+                                                   </Tooltip>
+                                                       <Tooltip title="Delete">
+                                                           <IconButton
+                                                               onClick={() => {
+                                                                   console.log("delete icon clicked!")
+                                                                    this.deleteCustomer(row.id)
+                                                               }}
+                                                           >
+                                                               <DeleteIcon color="error" />
+                                                           </IconButton>
+                                                       </Tooltip></TableCell>
+                                               </TableRow>
+                                           ))
+                                        }
+                                    </TableBody>
                                 </Table>
                             </TableContainer>
                         </div>
@@ -261,6 +360,7 @@ class User extends Component {
             </Fragment>
         );
     }
+
 }
 
 export default User;
