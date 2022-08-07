@@ -34,6 +34,7 @@ class User extends Component {
                 },
                 phone: ''
             },
+            btnStatus:'save',
             data:[],
             loaded:false,
         }
@@ -59,7 +60,7 @@ class User extends Component {
                     }
                 },
                 phone: ''
-            }
+            },
         });
     };
 
@@ -69,12 +70,13 @@ class User extends Component {
         if (response.status === 200) {
             this.setState({
                 loaded:true,
+                btnStatus:'Save'
             })
             this.loadAllUsers()
             this.clearFields();
-            alert("User Saved Successfully")
+            alert("User "+this.state.btnStatus+" Successfully")
         } else {
-            alert("User Save Failed")
+            alert("User "+this.state.btnStatus+" Failed")
         }
     }
 
@@ -88,12 +90,43 @@ class User extends Component {
         }
     }
 
-    updateCustomer=async (data)=>{
+    updateCustomer= (data)=>{
         console.log(data)
+        this.setState({
+            userForm: {
+                email: data.email,
+                username: data.username,
+                password: data.password,
+                name: {
+                    firstname: data.name.firstname,
+                    lastname: data.name.firstname,
+                },
+                address: {
+                    city: data.address.city,
+                    street: data.address.street,
+                    number: data.address.number,
+                    zipcode: data.address.zipcode,
+                    geolocation: {
+                        lat: data.address.geolocation.lat,
+                        long: data.address.geolocation.long
+                    }
+                },
+                phone: data.phone,
+            },
+            btnStatus:'Update',
+        });
+
     }
 
     deleteCustomer=async (id)=>{
         console.log(id)
+        let response=CustomerService.deleteCustomer(id);
+        if (response.status===204){
+            this.loadAllUsers()
+            alert("User Delete Successfully")
+        }else {
+            alert("User Delete Failed")
+        }
     }
 
 
@@ -291,7 +324,7 @@ class User extends Component {
                                     onClick={() => {
                                         this.userSave()
                                     }}>
-                                Save
+                                {this.state.btnStatus}
                             </Button>
                         </div>
                     </div>

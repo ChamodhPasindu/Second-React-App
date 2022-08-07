@@ -40,5 +40,18 @@ class CustomerService{
         return await promise;
     }
 
+    deleteCustomer = async (params) => {
+        const promise = new Promise((resolve, reject) => {
+            axios.delete('users/'+params, )
+                .then((res) => {
+                    return resolve(res)
+                })
+                .catch((err) => {
+                    return resolve(err)
+                })
+        })
+        return await promise;
+    };
+
 }
 export default new CustomerService();
