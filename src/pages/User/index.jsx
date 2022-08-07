@@ -14,6 +14,7 @@ class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: '',
             userForm: {
                 email: '',
                 username: '',
@@ -34,12 +35,13 @@ class User extends Component {
                 },
                 phone: ''
             },
-            btnStatus:'save',
-            data:[],
-            loaded:false,
+            btnStatus: 'save',
+            data: [],
+            loaded: false,
         }
     }
-    clearFields= () => {
+
+    clearFields = () => {
         this.setState({
             userForm: {
                 email: '',
@@ -64,35 +66,53 @@ class User extends Component {
         });
     };
 
-    userSave=async ()=>{
-        let userForm=this.state.userForm;
-        let response = await CustomerService.postCustomer(userForm);
-        if (response.status === 200) {
-            this.setState({
-                loaded:true,
-                btnStatus:'Save'
-            })
-            this.loadAllUsers()
-            this.clearFields();
-            alert("User "+this.state.btnStatus+" Successfully")
+    userSave = async () => {
+
+        if (this.state.btnStatus === 'save') {
+            let userForm = this.state.userForm;
+            console.log(userForm)
+            let response = await CustomerService.postCustomer(userForm);
+            if (response.status === 200) {
+                this.setState({
+                    loaded: true,
+                })
+                this.loadAllUsers()
+                this.clearFields();
+                alert("User Saved Successfully")
+            } else {
+                alert("User Saving Failed")
+            }
         } else {
-            alert("User "+this.state.btnStatus+" Failed")
+            let userForm = this.state.userForm;
+            let response = await CustomerService.putCustomer(userForm, this.state.id);
+            if (response.status === 200) {
+                this.setState({
+                    loaded: true,
+                    btnStatus: 'save'
+                })
+                this.loadAllUsers()
+                this.clearFields();
+                alert("User Updated Successfully")
+            } else {
+                alert("User Updating Failed")
+            }
         }
+
     }
 
 
-    loadAllUsers=async ()=> {
-        let response=await CustomerService.getAllCustomer();
-        if (response.status===200){
+    loadAllUsers = async () => {
+        let response = await CustomerService.getAllCustomer();
+        if (response.status === 200) {
             this.setState({
                 data: response.data
             })
         }
     }
 
-    updateCustomer= (data)=>{
-        console.log(data)
+    updateCustomer = (data) => {
         this.setState({
+            id: data.id,
             userForm: {
                 email: data.email,
                 username: data.username,
@@ -113,18 +133,17 @@ class User extends Component {
                 },
                 phone: data.phone,
             },
-            btnStatus:'Update',
+            btnStatus: 'update',
         });
 
     }
 
-    deleteCustomer=async (id)=>{
-        console.log(id)
-        let response=CustomerService.deleteCustomer(id);
-        if (response.status===204){
+    deleteCustomer = async (id) => {
+        let response = CustomerService.deleteCustomer(id);
+        if (response.status === 200) {
             this.loadAllUsers()
             alert("User Delete Successfully")
-        }else {
+        } else {
             alert("User Delete Failed")
         }
     }
@@ -314,7 +333,7 @@ class User extends Component {
                                 color="error"
                                 size="large"
                                 sx={{marginRight: "10px"}}
-                                onClick={()=>{
+                                onClick={() => {
                                     this.clearFields()
                                 }}
                             >
@@ -351,38 +370,38 @@ class User extends Component {
                                     </TableHead>
                                     <TableBody>
                                         {
-                                           this.state.data.map((row)=>(
-                                               <TableRow>
-                                                   <TableCell style={{ fontSize: '15px'}} align="center">{row.name.firstname}</TableCell>
-                                                   <TableCell style={{ fontSize: '15px'}}
-                                                              align="center">{row.email}</TableCell>
-                                                   <TableCell style={{  fontSize: '15px'}}
-                                                              align="center">{row.address.city}</TableCell>
-                                                   <TableCell style={{ fontSize: '15px'}}
-                                                              align="center">{row.phone}</TableCell>
-                                                   <TableCell style={{  fontSize: '15px'}}
-                                                              align="center"> <Tooltip title="Edit">
-                                                       <IconButton
-                                                           onClick={() => {
-                                                               console.log("edit icon clicked!")
-                                                               this.updateCustomer(row);
-                                                           }}
-                                                       >
-                                                           <EditIcon color="primary" />
-                                                       </IconButton>
-                                                   </Tooltip>
-                                                       <Tooltip title="Delete">
-                                                           <IconButton
-                                                               onClick={() => {
-                                                                   console.log("delete icon clicked!")
+                                            this.state.data.map((row) => (
+                                                <TableRow>
+                                                    <TableCell style={{fontSize: '15px'}}
+                                                               align="center">{row.name.firstname}</TableCell>
+                                                    <TableCell style={{fontSize: '15px'}}
+                                                               align="center">{row.email}</TableCell>
+                                                    <TableCell style={{fontSize: '15px'}}
+                                                               align="center">{row.address.city}</TableCell>
+                                                    <TableCell style={{fontSize: '15px'}}
+                                                               align="center">{row.phone}</TableCell>
+                                                    <TableCell style={{fontSize: '15px'}}
+                                                               align="center">
+                                                        <Tooltip title="Edit">
+                                                            <IconButton
+                                                                onClick={() => {
+                                                                    this.updateCustomer(row);
+                                                                }}
+                                                            >
+                                                                <EditIcon color="primary"/>
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                        <Tooltip title="Delete">
+                                                            <IconButton
+                                                                onClick={() => {
                                                                     this.deleteCustomer(row.id)
-                                                               }}
-                                                           >
-                                                               <DeleteIcon color="error" />
-                                                           </IconButton>
-                                                       </Tooltip></TableCell>
-                                               </TableRow>
-                                           ))
+                                                                }}
+                                                            >
+                                                                <DeleteIcon color="error"/>
+                                                            </IconButton>
+                                                        </Tooltip></TableCell>
+                                                </TableRow>
+                                            ))
                                         }
                                     </TableBody>
                                 </Table>

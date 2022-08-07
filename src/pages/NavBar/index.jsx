@@ -1,12 +1,9 @@
 import React, {Component,Fragment} from "react";
-import {AppBar, Button, Grid, Tabs, Toolbar, Typography,Tab} from "@mui/material";
+import {AppBar, Button, Tabs, Toolbar, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 
 
 class NavBar extends Component{
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return(
@@ -59,9 +56,9 @@ class NavBar extends Component{
                                     color: 'white',
                                     textDecoration: 'none',
                                     fontSize: '25px',
-                                    marginRight: '10px'
+                                    marginRight: '10px',
                                 }}
-                            >User
+                            >{this.props.username}
                             </Typography>
                             <Link to={"/"} style={{textDecoration: 'none'}}>
                                 <Button style={{

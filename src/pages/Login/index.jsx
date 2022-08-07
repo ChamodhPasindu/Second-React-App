@@ -2,9 +2,10 @@ import React, {Fragment} from "react";
 import {Component} from "react";
 import "./style.css";
 import {Typography, TextField, Button} from "@mui/material";
-import {Link, Route, Routes} from "react-router-dom";
-import HomePage from "../Home";
+import {Link} from "react-router-dom";
 import CustomerService from "../../services/CustomerService";
+import LocalStorageService from "../../services/LocalStorageService";
+
 
 class Login extends Component {
     constructor(props) {
@@ -20,15 +21,19 @@ class Login extends Component {
 
     loginHandle = async () => {
         let loginData = this.state.loginData;
-        console.log(loginData)
         let response = await CustomerService.loginCustomer(loginData);
         if (response.status === 200) {
-            console.log(response.data)
+            console.log(response.data.token)
+            LocalStorageService.setItem('accessToken',response.data.token)
             return true
         } else {
             alert("Incorrect username & password")
             return false
         }
+    }
+
+    routerChange=()=>{
+        window.open("homepage","_self")
     }
 
     render() {
@@ -75,7 +80,6 @@ class Login extends Component {
                                     this.setState({loginData})
                                 }}
                             />
-                                <Link to={"homepage"} style={{textDecoration: 'none',width:'100%'}}>
                             <Button
                                 style={{marginBottom: "30px", height: "50px", fontSize: "20px", fontWeight: 'bold'}}
                                 variant="contained"
@@ -83,13 +87,13 @@ class Login extends Component {
                                 fullWidth
                                 onClick={() => {
                                     this.loginHandle().then(bool => {
-                                            <Link to={"homepage"}>{bool? console.log("login"):console.log("Incorrent")}</Link>
+                                        if (bool){
+                                            this.routerChange()
+                                        }
                                     })
                                 }}
                             >Login</Button>
-                                </Link>
                             <Typography
-
                                 variant="h7"
                                 gutterBottom
                                 component="div"

@@ -4,6 +4,8 @@ import "./style.css";
 import CartService from "../../services/CartService";
 import ProductService from "../../services/ProductService";
 import CustomerService from "../../services/CustomerService";
+import LocalStorageService from "../../services/LocalStorageService";
+import jwt_decode from "jwt-decode";
 
 class HomePage extends Component {
   constructor(props) {
@@ -11,7 +13,8 @@ class HomePage extends Component {
     this.state={
       products:'00',
       carts:'00',
-      users:'00'
+      users:'00',
+      username:''
     }
   }
 
@@ -21,23 +24,22 @@ class HomePage extends Component {
       this.setState({
         carts:response.data.length
       })
-
     }
   }
+
   setProducts=async ()=>{
     let response=await ProductService.getAllProduct();
     if (response.status===200) {
-      console.log(response.data)
       this.setState({
         products:response.data.length
       })
 
     }
   }
+
   setUsers=async ()=>{
     let response=await CustomerService.getAllCustomer();
     if (response.status===200) {
-      console.log(response.data)
       this.setState({
         users:response.data.length
       })
@@ -45,17 +47,30 @@ class HomePage extends Component {
     }
   }
 
+  setUsername=async ()=>{
+    const accessToken=await LocalStorageService.getItem('accessToken')
+    console.log(accessToken)
+
+    const decoded=jwt_decode(accessToken);
+    console.log(decoded)
+
+    this.setState({
+      username:decoded.user
+    })
+  }
+
   componentDidMount() {
     this.setCarts()
     this.setProducts()
     this.setUsers()
+    this.setUsername()
   }
 
 
   render() {
     return (
       <Fragment>
-        <NavBar />
+        <NavBar username={this.state.username}/>
         <div className="home-container">
           <div className="home-sub-container">
             <div className="home-card-div-container">

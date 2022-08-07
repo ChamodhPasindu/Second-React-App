@@ -27,6 +27,19 @@ class CustomerService{
         })
         return await promise
     }
+    putCustomer = async (data,id) => {
+        const promise = new Promise((resolve, reject) => {
+            axios.put('users/'+id, data)
+                .then((res) => {
+                    return resolve(res)
+                })
+                .catch((er) => {
+                    console.log('error: ' + er);
+                    return resolve(er)
+                })
+        })
+        return await promise
+    }
     getAllCustomer = async () => {
         const promise = new Promise((resolve, reject) => {
             axios.get('users')
