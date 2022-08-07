@@ -36,6 +36,7 @@ class Cart extends Component {
     console.log(cartForm)
     let response=await CartService.postCart(cartForm);
     if (response.status===200){
+      this.clearFields()
       alert("Cart Saved Successfully")
     }else {
       alert("Cart Saving Failed")
