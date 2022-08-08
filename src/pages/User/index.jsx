@@ -1,7 +1,6 @@
 import React from "react";
 import {Component, Fragment} from "react";
 import "./style.css";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {Link} from "react-router-dom";
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip} from "@mui/material";
@@ -9,6 +8,7 @@ import CustomerService from "../../services/CustomerService";
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 class User extends Component {
     constructor(props) {
@@ -67,7 +67,6 @@ class User extends Component {
     };
 
     userSave = async () => {
-
         if (this.state.btnStatus === 'save') {
             let userForm = this.state.userForm;
             console.log(userForm)
@@ -97,9 +96,7 @@ class User extends Component {
                 alert("User Updating Failed")
             }
         }
-
     }
-
 
     loadAllUsers = async () => {
         let response = await CustomerService.getAllCustomer();
@@ -135,7 +132,6 @@ class User extends Component {
             },
             btnStatus: 'update',
         });
-
     }
 
     deleteCustomer = async (id) => {
@@ -148,17 +144,18 @@ class User extends Component {
         }
     }
 
-
     componentDidMount() {
         this.loadAllUsers();
     }
-
 
     render() {
         return (
             <Fragment>
                 <div className="user-container">
-                    <div className="user-sub-detail-container">
+                    <ValidatorForm className="user-sub-detail-container"
+                                   ref="form"
+                                   onSubmit={this.userSave}
+                                   onError={errors => console.log(errors)}>
                         <div className="user-form-title">
                             <Link to={"/"} style={{textDecoration: "none", marginRight: '28%', marginTop: '10px'}}>
                                 <Button
@@ -178,153 +175,189 @@ class User extends Component {
                         </div>
                         <div className="user-from-detail">
                             <div className="user-form-detail-col1">
-                                <TextField
-                                    id="outlined-basic"
-                                    label="First Name"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={this.state.userForm.name.firstname}
-                                    onChange={(e) => {
-                                        let userForm = this.state.userForm;
-                                        userForm.name.firstname = e.target.value
-                                        this.setState({userForm})
-                                    }}
-                                />
-                                <TextField
-                                    id="outlined-basic"
-                                    label="Email"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={this.state.userForm.email}
-                                    onChange={(e) => {
-                                        let userForm = this.state.userForm;
-                                        userForm.email = e.target.value
-                                        this.setState({userForm})
-                                    }}
-                                />
-                                <TextField
-                                    id="outlined-basic"
-                                    label="Password"
-                                    type="password"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={this.state.userForm.password}
-                                    onChange={(e) => {
-                                        let userForm = this.state.userForm;
-                                        userForm.password = e.target.value
-                                        this.setState({userForm})
-                                    }}
-                                />
-                                <TextField
-                                    id="outlined-basic"
-                                    label="Street"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={this.state.userForm.address.street}
-                                    onChange={(e) => {
-                                        let userForm = this.state.userForm;
-                                        userForm.address.street = e.target.value
-                                        this.setState({userForm})
-                                    }}
-                                />
-                                <TextField
-                                    id="outlined-basic"
-                                    label="Zip Code"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={this.state.userForm.address.zipcode}
-                                    onChange={(e) => {
-                                        let userForm = this.state.userForm;
-                                        userForm.address.zipcode = e.target.value
-                                        this.setState({userForm})
-                                    }}
-                                />
-                                <TextField
-                                    id="outlined-basic"
-                                    label="Long Value"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={this.state.userForm.address.geolocation.long}
-                                    onChange={(e) => {
-                                        let userForm = this.state.userForm;
-                                        userForm.address.geolocation.long = e.target.value
-                                        this.setState({userForm})
-                                    }}
-                                />
+                                <div style={{width: '100%'}}>
+                                    <TextValidator
+                                        id="outlined-basic"
+                                        label="First Name"
+                                        variant="outlined"
+                                        fullWidth
+                                        value={this.state.userForm.name.firstname}
+                                        onChange={(e) => {
+                                            let userForm = this.state.userForm;
+                                            userForm.name.firstname = e.target.value
+                                            this.setState({userForm})
+                                        }}
+                                        validators={['required']}
+                                    />
+                                </div>
+                                <div style={{width: '100%'}}>
+                                    <TextValidator
+                                        id="outlined-basic"
+                                        label="Email"
+                                        variant="outlined"
+                                        fullWidth
+                                        value={this.state.userForm.email}
+                                        onChange={(e) => {
+                                            let userForm = this.state.userForm;
+                                            userForm.email = e.target.value
+                                            this.setState({userForm})
+                                        }}
+                                        validators={['required']}
+                                    />
+                                </div>
+                                <div style={{width: '100%'}}>
+                                    <TextValidator
+                                        id="outlined-basic"
+                                        label="Password"
+                                        type="password"
+                                        variant="outlined"
+                                        fullWidth
+                                        value={this.state.userForm.password}
+                                        onChange={(e) => {
+                                            let userForm = this.state.userForm;
+                                            userForm.password = e.target.value
+                                            this.setState({userForm})
+                                        }}
+                                        validators={['required']}
+                                    />
+                                </div>
+                                <div style={{width: '100%'}}>
+                                    <TextValidator
+                                        id="outlined-basic"
+                                        label="Street"
+                                        variant="outlined"
+                                        fullWidth
+                                        value={this.state.userForm.address.street}
+                                        onChange={(e) => {
+                                            let userForm = this.state.userForm;
+                                            userForm.address.street = e.target.value
+                                            this.setState({userForm})
+                                        }}
+                                        validators={['required']}
+                                    />
+                                </div>
+                                <div style={{width: '100%'}}>
+                                    <TextValidator
+                                        id="outlined-basic"
+                                        label="Zip Code"
+                                        variant="outlined"
+                                        fullWidth
+                                        value={this.state.userForm.address.zipcode}
+                                        onChange={(e) => {
+                                            let userForm = this.state.userForm;
+                                            userForm.address.zipcode = e.target.value
+                                            this.setState({userForm})
+                                        }}
+                                        validators={['required']}
+                                    />
+                                </div>
+                                <div style={{width: '100%'}}>
+                                    <TextValidator
+                                        id="outlined-basic"
+                                        label="Long Value"
+                                        variant="outlined"
+                                        fullWidth
+                                        value={this.state.userForm.address.geolocation.long}
+                                        onChange={(e) => {
+                                            let userForm = this.state.userForm;
+                                            userForm.address.geolocation.long = e.target.value
+                                            this.setState({userForm})
+                                        }}
+                                        validators={['required']}
+                                    />
+                                </div>
                             </div>
                             <div className="user-form-detail-col1">
-                                <TextField
-                                    id="outlined-basic"
-                                    label="Last Name"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={this.state.userForm.name.lastname}
-                                    onChange={(e) => {
-                                        let userForm = this.state.userForm;
-                                        userForm.name.lastname = e.target.value
-                                        this.setState({userForm})
-                                    }}
-                                />
-                                <TextField
-                                    id="outlined-basic"
-                                    label="User Name"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={this.state.userForm.username}
-                                    onChange={(e) => {
-                                        let userForm = this.state.userForm;
-                                        userForm.username = e.target.value
-                                        this.setState({userForm})
-                                    }}
-                                />
-                                <TextField
-                                    id="outlined-basic"
-                                    label="City"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={this.state.userForm.address.city}
-                                    onChange={(e) => {
-                                        let userForm = this.state.userForm;
-                                        userForm.address.city = e.target.value
-                                        this.setState({userForm})
-                                    }}
-                                />
-                                <TextField
-                                    id="outlined-basic"
-                                    label="Street No"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={this.state.userForm.address.number}
-                                    onChange={(e) => {
-                                        let userForm = this.state.userForm;
-                                        userForm.address.number = e.target.value
-                                        this.setState({userForm})
-                                    }}
-                                />
-                                <TextField
-                                    id="outlined-basic"
-                                    label="Lat Value"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={this.state.userForm.address.geolocation.lat}
-                                    onChange={(e) => {
-                                        let userForm = this.state.userForm;
-                                        userForm.address.geolocation.lat = e.target.value
-                                        this.setState({userForm})
-                                    }}
-                                />
-                                <TextField
-                                    id="outlined-basic"
-                                    label="Mobile No"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={this.state.userForm.phone}
-                                    onChange={(e) => {
-                                        let userForm = this.state.userForm;
-                                        userForm.phone = e.target.value
-                                        this.setState({userForm})
-                                    }}
-                                />
+                                <div style={{width: '100%'}}>
+                                    <TextValidator
+                                        id="outlined-basic"
+                                        label="Last Name"
+                                        variant="outlined"
+                                        fullWidth
+                                        value={this.state.userForm.name.lastname}
+                                        onChange={(e) => {
+                                            let userForm = this.state.userForm;
+                                            userForm.name.lastname = e.target.value
+                                            this.setState({userForm})
+                                        }}
+                                        validators={['required']}
+                                    />
+                                </div>
+                                <div style={{width: '100%'}}>
+                                    <TextValidator
+                                        id="outlined-basic"
+                                        label="User Name"
+                                        variant="outlined"
+                                        fullWidth
+                                        value={this.state.userForm.username}
+                                        onChange={(e) => {
+                                            let userForm = this.state.userForm;
+                                            userForm.username = e.target.value
+                                            this.setState({userForm})
+                                        }}
+                                        validators={['required']}
+                                    />
+                                </div>
+                                <div style={{width: '100%'}}>
+                                    <TextValidator
+                                        id="outlined-basic"
+                                        label="City"
+                                        variant="outlined"
+                                        fullWidth
+                                        value={this.state.userForm.address.city}
+                                        onChange={(e) => {
+                                            let userForm = this.state.userForm;
+                                            userForm.address.city = e.target.value
+                                            this.setState({userForm})
+                                        }}
+                                        validators={['required']}
+                                    />
+                                </div>
+                                <div style={{width: '100%'}}>
+                                    <TextValidator
+                                        id="outlined-basic"
+                                        label="Street No"
+                                        variant="outlined"
+                                        fullWidth
+                                        value={this.state.userForm.address.number}
+                                        onChange={(e) => {
+                                            let userForm = this.state.userForm;
+                                            userForm.address.number = e.target.value
+                                            this.setState({userForm})
+                                        }}
+                                        validators={['required']}
+                                    />
+                                </div>
+                                <div style={{width: '100%'}}>
+                                    <TextValidator
+                                        id="outlined-basic"
+                                        label="Lat Value"
+                                        variant="outlined"
+                                        fullWidth
+                                        value={this.state.userForm.address.geolocation.lat}
+                                        onChange={(e) => {
+                                            let userForm = this.state.userForm;
+                                            userForm.address.geolocation.lat = e.target.value
+                                            this.setState({userForm})
+                                        }}
+                                        validators={['required']}
+                                    />
+                                </div>
+                                <div style={{width: '100%'}}>
+                                    <TextValidator
+                                        id="outlined-basic"
+                                        label="Mobile No"
+                                        variant="outlined"
+                                        fullWidth
+                                        value={this.state.userForm.phone}
+                                        onChange={(e) => {
+                                            let userForm = this.state.userForm;
+                                            userForm.phone = e.target.value
+                                            this.setState({userForm})
+                                        }}
+                                        validators={['required']}
+                                    />
+                                </div>
                             </div>
                         </div>
                         <div className="user-form-detail-btn">
@@ -339,14 +372,12 @@ class User extends Component {
                             >
                                 Clear
                             </Button>
-                            <Button variant="outlined" size="large"
-                                    onClick={() => {
-                                        this.userSave()
-                                    }}>
+                            <Button variant="outlined" size="large" type="submit">
                                 {this.state.btnStatus}
                             </Button>
                         </div>
-                    </div>
+                    </ValidatorForm>
+
                     <div className="user-sub-table-container">
                         <div className="user-form-title">
                             <h1>Current Users</h1>

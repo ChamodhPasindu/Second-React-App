@@ -1,5 +1,5 @@
 
-.login-container{
+.login-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -7,7 +7,8 @@
     height: 100vh;
     background-color: #F0F2F5;
 }
-.login-sub-container{
+
+.login-sub-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,7 +20,8 @@
     border-radius: 10px;
 
 }
-.login-text-field-area{
+
+.login-text-field-area {
     width: 80%;
     height: 80%;
     display: flex;

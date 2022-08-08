@@ -1,4 +1,4 @@
-.home-container{
+.home-container {
     display: flex;
     justify-content: center;
     align-self: center;
@@ -6,7 +6,7 @@
 
 }
 
-.home-sub-container{
+.home-sub-container {
     width: 80%;
     height: 500px;
     margin: auto;
@@ -17,7 +17,8 @@
     position: absolute;
 
 }
-.home-card-div-container{
+
+.home-card-div-container {
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -25,8 +26,9 @@
     justify-content: space-around;
 
 }
-.home-card-div{
-    color:blue;
+
+.home-card-div {
+    color: blue;
     font-size: 22px;
     display: flex;
     flex-direction: column;

@@ -6,7 +6,6 @@ import {Link} from "react-router-dom";
 import CustomerService from "../../services/CustomerService";
 import LocalStorageService from "../../services/LocalStorageService";
 
-
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -24,7 +23,7 @@ class Login extends Component {
         let response = await CustomerService.loginCustomer(loginData);
         if (response.status === 200) {
             console.log(response.data.token)
-            LocalStorageService.setItem('accessToken',response.data.token)
+            LocalStorageService.setItem('accessToken', response.data.token)
             return true
         } else {
             alert("Incorrect username & password")
@@ -32,8 +31,8 @@ class Login extends Component {
         }
     }
 
-    routerChange=()=>{
-        window.open("homepage","_self")
+    routerChange = () => {
+        window.open("homepage", "_self")
     }
 
     render() {
@@ -87,7 +86,7 @@ class Login extends Component {
                                 fullWidth
                                 onClick={() => {
                                     this.loginHandle().then(bool => {
-                                        if (bool){
+                                        if (bool) {
                                             this.routerChange()
                                         }
                                     })

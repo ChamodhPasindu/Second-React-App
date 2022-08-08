@@ -1,6 +1,6 @@
 import axios from "../axios";
 
-class CustomerService{
+class CustomerService {
     loginCustomer = async (data) => {
         const promise = new Promise((resolve, reject) => {
             axios.post('auth/login', data)    // 20s
@@ -27,9 +27,9 @@ class CustomerService{
         })
         return await promise
     }
-    putCustomer = async (data,id) => {
+    putCustomer = async (data, id) => {
         const promise = new Promise((resolve, reject) => {
-            axios.put('users/'+id, data)
+            axios.put('users/' + id, data)
                 .then((res) => {
                     return resolve(res)
                 })
@@ -55,7 +55,7 @@ class CustomerService{
 
     deleteCustomer = async (params) => {
         const promise = new Promise((resolve, reject) => {
-            axios.delete('users/'+params, )
+            axios.delete('users/' + params,)
                 .then((res) => {
                     return resolve(res)
                 })
@@ -67,4 +67,5 @@ class CustomerService{
     };
 
 }
+
 export default new CustomerService();

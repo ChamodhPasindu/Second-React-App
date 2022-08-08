@@ -1,6 +1,6 @@
 import axios from "../axios";
 
-class CartService{
+class CartService {
     getAllCart = async () => {
         const promise = new Promise((resolve, reject) => {
             axios.get('carts')
@@ -15,7 +15,7 @@ class CartService{
     }
     postCart = async (data) => {
         const promise = new Promise((resolve, reject) => {
-            axios.post('carts',data)
+            axios.post('carts', data)
                 .then((res) => {
                     return resolve(res)
                 })
@@ -26,4 +26,5 @@ class CartService{
         return await promise;
     }
 }
+
 export default new CartService()
