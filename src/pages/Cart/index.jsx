@@ -22,10 +22,12 @@ class Cart extends Component {
         super(props);
         this.state = {
             cartForm: {
-                user_name: '',
-                product_title: '',
+                userId: '',
                 date: defaultValue,
-                qty: '',
+                products:[{
+                    productId:'',
+                    quantity:''
+                }],
             },
             products: [],
             users: [],
@@ -34,7 +36,6 @@ class Cart extends Component {
 
     saveCart = async () => {
         let cartForm = this.state.cartForm;
-        console.log(cartForm)
         let response = await CartService.postCart(cartForm);
         if (response.status === 200) {
             this.clearFields()
@@ -70,10 +71,8 @@ class Cart extends Component {
     clearFields = () => {
         this.setState({
             cartForm: {
-                user_name: '',
-                product_title: '',
                 date: defaultValue,
-                qty: '',
+                products: [{quantity:''}],
             }
         })
     }
@@ -102,17 +101,17 @@ class Cart extends Component {
                                         label="User Name"
                                         onChange={(e) => {
                                             let cartForm = this.state.cartForm;
-                                            cartForm.user_name = this.state.users[e.target.value].name.firstname + " " + this.state.users[e.target.value].name.lastname;
+                                            cartForm.userId = e.target.value;
                                             this.setState({cartForm})
                                         }}
                                     >
-                                        {this.state.users.map((user => (
+                                        {this.state.users.map((user) => (
                                             <MenuItem
                                                 value={user.id}>{user.name.firstname + " " + user.name.lastname}</MenuItem>
-                                        )))}
+                                        ))}
                                     </Select>
                                 </FormControl>
-                                <FormControl fullWidth sx={{marginTop: "30px"}}>
+                                <FormControl sx={{marginTop: "30px",width:'100%'}}>
                                     <InputLabel id="demo-simple-select-label">
                                         Product Title
                                     </InputLabel>
@@ -122,13 +121,13 @@ class Cart extends Component {
                                         label="Product Title"
                                         onChange={(e) => {
                                             let cartForm = this.state.cartForm;
-                                            cartForm.product_title = this.state.products[e.target.value].title;
+                                            cartForm.products[0].productId = e.target.value;
                                             this.setState({cartForm})
                                         }}
                                     >
-                                        {this.state.products.map((product => (
+                                        {this.state.products.map((product) => (
                                             <MenuItem value={product.id}>{product.title}</MenuItem>
-                                        )))}
+                                        ))}
                                     </Select>
                                 </FormControl>
                             </div>
@@ -137,7 +136,7 @@ class Cart extends Component {
                                     id="date"
                                     label="Date"
                                     type="date"
-                                    sx={{width: "100%"}}
+                                    fullWidth
                                     value={this.state.cartForm.date}
                                     defaultValue={this.state.cartForm.date}
                                     InputLabelProps={{
@@ -151,16 +150,15 @@ class Cart extends Component {
                                 />
                                 <div style={{width: '100%'}}>
                                     <TextValidator
-                                        sx={{marginTop: "30px"}}
+                                        sx={{marginTop: "30px",width:'100%'}}
                                         id="outlined-basic"
                                         label="Qty"
                                         type="number"
                                         variant="outlined"
-                                        fullWidth
-                                        value={this.state.cartForm.qty}
+                                        value={this.state.cartForm.products[0].quantity}
                                         onChange={(e) => {
                                             let cartForm = this.state.cartForm;
-                                            cartForm.qty = e.target.value
+                                            cartForm.products[0].quantity = +(e.target.value)
                                             this.setState({cartForm})
                                         }}
                                         validators={['required']}

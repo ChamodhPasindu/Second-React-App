@@ -1,14 +1,14 @@
 import React from "react";
 import {Fragment, Component} from "react";
 import "./style.css";
-import {TextField, Button} from "@mui/material";
+import { Button} from "@mui/material";
 import NavBar from '../NavBar'
 import ProductService from "../../services/ProductService";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import {ValidatorForm, TextValidator,SelectValidator} from 'react-material-ui-form-validator';
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 
 class Product extends Component {
@@ -62,6 +62,7 @@ class Product extends Component {
         this.setProductCategory()
     }
 
+
     render() {
         return (
             <Fragment>
@@ -75,13 +76,13 @@ class Product extends Component {
                             <h1>Product Manage</h1>
                         </div>
                         <div className="manage-form-detail">
-                            <div className="manage-form-detail-col1">
+                            <div  className="manage-form-detail-col1">
                                 <div style={{width:'100%'}}>
                                     <TextValidator
-                                        id="outlined-basic"
+                                        fullWidth
+                                        id="title"
                                         label="Title"
                                         variant="outlined"
-                                        fullWidth
                                         value={this.state.productForm.title}
                                         onChange={(e) => {
                                             let form = this.state.productForm;
@@ -95,7 +96,6 @@ class Product extends Component {
                                         Product Title
                                     </InputLabel>
                                     <Select
-                                        style={{width:'100%'}}
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
                                         label="Product Title"
@@ -125,7 +125,7 @@ class Product extends Component {
                             <div className="manage-form-detail-col1">
                                 <div style={{width:'100%'}}>
                                     <TextValidator
-                                        id="outlined-basic"
+                                        id="price"
                                         label="Price"
                                         variant="outlined"
                                         type="number"
@@ -142,12 +142,12 @@ class Product extends Component {
                                 <div style={{width:'100%'}}>
                                     <TextValidator
                                         sx={{marginTop: "30px"}}
-                                        id="outlined-basic"
+                                        id="description"
                                         label="Description"
                                         variant="outlined"
                                         multiline
-                                        rows={4}
                                         fullWidth
+                                        rows={4}
                                         value={this.state.productForm.description}
                                         onChange={(e) => {
                                             let form = this.state.productForm;

@@ -49,10 +49,7 @@ class HomePage extends Component {
 
     setUsername = async () => {
         const accessToken = await LocalStorageService.getItem('accessToken')
-        console.log(accessToken)
-
         const decoded = jwt_decode(accessToken);
-        console.log(decoded)
 
         this.setState({
             username: decoded.user

@@ -177,7 +177,7 @@ class User extends Component {
                             <div className="user-form-detail-col1">
                                 <div style={{width: '100%'}}>
                                     <TextValidator
-                                        id="outlined-basic"
+                                        id="firstname"
                                         label="First Name"
                                         variant="outlined"
                                         fullWidth
@@ -192,7 +192,7 @@ class User extends Component {
                                 </div>
                                 <div style={{width: '100%'}}>
                                     <TextValidator
-                                        id="outlined-basic"
+                                        id="email"
                                         label="Email"
                                         variant="outlined"
                                         fullWidth
@@ -207,7 +207,7 @@ class User extends Component {
                                 </div>
                                 <div style={{width: '100%'}}>
                                     <TextValidator
-                                        id="outlined-basic"
+                                        id="password"
                                         label="Password"
                                         type="password"
                                         variant="outlined"
@@ -223,7 +223,7 @@ class User extends Component {
                                 </div>
                                 <div style={{width: '100%'}}>
                                     <TextValidator
-                                        id="outlined-basic"
+                                        id="street"
                                         label="Street"
                                         variant="outlined"
                                         fullWidth
@@ -238,7 +238,7 @@ class User extends Component {
                                 </div>
                                 <div style={{width: '100%'}}>
                                     <TextValidator
-                                        id="outlined-basic"
+                                        id="zipCode"
                                         label="Zip Code"
                                         variant="outlined"
                                         fullWidth
@@ -253,7 +253,7 @@ class User extends Component {
                                 </div>
                                 <div style={{width: '100%'}}>
                                     <TextValidator
-                                        id="outlined-basic"
+                                        id="longValue"
                                         label="Long Value"
                                         variant="outlined"
                                         fullWidth
@@ -270,7 +270,7 @@ class User extends Component {
                             <div className="user-form-detail-col1">
                                 <div style={{width: '100%'}}>
                                     <TextValidator
-                                        id="outlined-basic"
+                                        id="lastname"
                                         label="Last Name"
                                         variant="outlined"
                                         fullWidth
@@ -285,7 +285,7 @@ class User extends Component {
                                 </div>
                                 <div style={{width: '100%'}}>
                                     <TextValidator
-                                        id="outlined-basic"
+                                        id="username"
                                         label="User Name"
                                         variant="outlined"
                                         fullWidth
@@ -300,7 +300,7 @@ class User extends Component {
                                 </div>
                                 <div style={{width: '100%'}}>
                                     <TextValidator
-                                        id="outlined-basic"
+                                        id="city"
                                         label="City"
                                         variant="outlined"
                                         fullWidth
@@ -315,7 +315,7 @@ class User extends Component {
                                 </div>
                                 <div style={{width: '100%'}}>
                                     <TextValidator
-                                        id="outlined-basic"
+                                        id="streetNo"
                                         label="Street No"
                                         variant="outlined"
                                         fullWidth
@@ -330,7 +330,7 @@ class User extends Component {
                                 </div>
                                 <div style={{width: '100%'}}>
                                     <TextValidator
-                                        id="outlined-basic"
+                                        id="latValue"
                                         label="Lat Value"
                                         variant="outlined"
                                         fullWidth
@@ -345,7 +345,7 @@ class User extends Component {
                                 </div>
                                 <div style={{width: '100%'}}>
                                     <TextValidator
-                                        id="outlined-basic"
+                                        id="mobileNo"
                                         label="Mobile No"
                                         variant="outlined"
                                         fullWidth
@@ -401,8 +401,8 @@ class User extends Component {
                                     </TableHead>
                                     <TableBody>
                                         {
-                                            this.state.data.map((row) => (
-                                                <TableRow>
+                                            this.state.data.map((row,index) => (
+                                                <TableRow key={index}>
                                                     <TableCell style={{fontSize: '15px'}}
                                                                align="center">{row.name.firstname}</TableCell>
                                                     <TableCell style={{fontSize: '15px'}}

@@ -27,7 +27,7 @@ class ProductService {
     }
     postProduct = async (data) => {
         const promise = new Promise((resolve, reject) => {
-            axios.get('products')
+            axios.post('products',data)
                 .then((res) => {
                     return resolve(res)
                 })

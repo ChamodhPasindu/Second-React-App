@@ -55,7 +55,7 @@ class Login extends Component {
                         <div className="login-text-field-area">
                             <TextField
                                 style={{marginBottom: "30px", marginTop: "20px"}}
-                                id="outlined-password-input"
+                                id="username"
                                 label="User Name"
                                 type="text"
                                 autoComplete="current-password"
@@ -68,7 +68,7 @@ class Login extends Component {
                             />
                             <TextField
                                 style={{marginBottom: "60px",}}
-                                id="outlined-password-input"
+                                id="password"
                                 label="Password"
                                 type="Password"
                                 autoComplete="current-password"

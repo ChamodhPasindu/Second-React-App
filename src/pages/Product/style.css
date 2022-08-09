@@ -32,7 +32,7 @@
 
 .manage-form-btn {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     height: 10%;
     width: 85%;

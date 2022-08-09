@@ -18,7 +18,7 @@ class NavBar extends Component {
                                 marginLeft: '5px',
                                 fontSize: 'medium'
                             }}>Dashboard</Button> </Link>
-                        <Tabs sx={{margin: 'auto', mr: 5, display: 'flex', alignItems: "center"}}>
+                        <Tabs value={0} sx={{margin: 'auto', mr: 5, display: 'flex', alignItems: "center"}}>
                             <Link to={"/product"} style={{textDecoration: 'none'}}>
                                 <Button style={{
                                     textTransform: 'none',
@@ -41,7 +41,7 @@ class NavBar extends Component {
                             </Link>
 
                         </Tabs>
-                        <Tabs textColor="white" sx={{margin: 'auto', mr: 1, display: 'flex', alignItems: "center"}}>
+                        <Tabs value={1} sx={{margin: 'auto', mr: 1, display: 'flex', alignItems: "center"}}>
 
                             <Typography
                                 variant="h6"
